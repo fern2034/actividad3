@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tareas</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Tareas</h1>
+        <input type="text" id="taskInput" placeholder="Escribe una nueva tarea...">
+        <button id="addTaskBtn">Agregar Tarea</button>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        // Selección de elementos
+        const taskInput = document.getElementById('taskInput');
+        const addTaskBtn = document.getElementById('addTaskBtn');
+        const taskList = document.getElementById('taskList');
+
+        // Función para agregar una nueva tarea
+        function addTask() {
+            const taskText = taskInput.value.trim(); // Eliminar espacios en blanco
+            if (taskText !== "") {
+                const listItem = document.createElement('li'); // Crear nuevo elemento <li>
+                listItem.innerHTML = `${taskText} <button class="deleteBtn">Eliminar</button>`; // Añadir el texto de la tarea y el botón de eliminar
+
+                taskList.appendChild(listItem); // Añadir el nuevo <li> a la lista
+
+                // Limpiar el input después de agregar la tarea
+                taskInput.value = '';
+
+                // Añadir el evento al botón de eliminar
+                const deleteBtn = listItem.querySelector('.deleteBtn');
+                deleteBtn.addEventListener('click', function() {
+                    taskList.removeChild(listItem);
+                });
+            } else {
+                alert('Por favor, escribe una tarea.');
+            }
+        }
+
+        // Evento para agregar tarea cuando se hace clic en el botón
+        addTaskBtn.addEventListener('click', addTask);
+
+        // Permitir agregar tarea presionando "Enter"
+        taskInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                addTask();
+            }
+        });
+    </script>
+</body>
+</html>
